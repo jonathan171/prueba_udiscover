@@ -45,7 +45,7 @@ class CompaniaCrontroller extends Controller
 
         $reglas = [
             'nombre' => 'required',
-            'logo'      => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'logo'      => 'image|mimes:jpg,png,jpeg,gif,svg|dimensions:min_width=100,min_height=100|max:2048',
         ];
 
         $mensajes = [
@@ -108,10 +108,17 @@ class CompaniaCrontroller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Compania $compania)
-    {
-        $request->validate([
-            'nombre' => 'required'
-        ]);
+    {   
+        $reglas = [
+            'nombre' => 'required',
+            'logo'      => 'image|mimes:jpg,png,jpeg,gif,svg|dimensions:min_width=100,min_height=100|max:2048',
+        ];
+
+        $mensajes = [
+            'required' => 'El campo :attribute es obligatorio',
+            'image' => 'El campo :attribute debe ser una imagen',
+        ];
+        $this->validate($request, $reglas, $mensajes);
 
         $compania->update($request->only(['nombre', 'correo', 'pagina_web']));
 
@@ -146,7 +153,7 @@ class CompaniaCrontroller extends Controller
         try {
             $compania->delete();
         } catch (Exception $e) {
-            
+
             return redirect()->route('companias.index')
             ->with('success', 'Excepción capturada: '.$e->getMessage());
            
