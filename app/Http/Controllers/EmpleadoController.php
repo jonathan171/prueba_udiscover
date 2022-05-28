@@ -39,11 +39,20 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $reglas =[
             'primer_nombre' => 'required',
             'apellido'      => 'required',
-            'correo'        => 'required'
-        ]);
+            'correo'        => 'required|email',
+            'compania_id'   => 'required'
+        ];
+
+        $mensajes = [
+            'required' => 'El campo :attribute es obligatorio',
+            'unique' => 'El campo :attribute ya existe',
+            'email' => 'El campo :attribute debe ser un correo',
+        ];
+
+        $this->validate($request,$reglas,$mensajes);
     
         Empleado::create($request->all());
      
