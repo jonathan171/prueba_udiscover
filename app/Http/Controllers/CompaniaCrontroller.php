@@ -143,7 +143,15 @@ class CompaniaCrontroller extends Controller
      */
     public function destroy(Compania $compania)
     {
-        $compania->delete();
+        try {
+            $compania->delete();
+        } catch (Exception $e) {
+            
+            return redirect()->route('companias.index')
+            ->with('success', 'Excepción capturada: '.$e->getMessage());
+           
+        }
+       
 
         return redirect()->route('companias.index')
             ->with('success', 'Compañia borrada correctamente');

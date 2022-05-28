@@ -53,7 +53,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
         
             <a class="btn btn-secondary" href="{{ route('companias.index') }}"> Cancelar</a>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
                
         </div>
